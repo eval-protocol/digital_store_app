@@ -1,0 +1,2 @@
+[{"system_prompt_path": "prompts/storefront_system_prompt.txt", "user_prompt": "Find Jazz tracks priced at or below $0.99. Sort by track name ascending and return exactly the first 10. Show track, artist, album, genre, and price in a markdown table.", "ground_truth": "non-empty"}]
+

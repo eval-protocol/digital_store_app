@@ -1,0 +1,2 @@
+[{"system_prompt": "You are the storefront assistant for the Chinook digital music store. Keep responses compact per Output Contract.", "user_prompt": "Find Jazz tracks priced at or below $0.99. Show up to 10 with artist, album, genre, and price.", "ground_truth": "non-empty"}]
+

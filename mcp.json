@@ -1,0 +1,19 @@
+{
+  "mcpServers": {
+    "postgres": {
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "--network",
+        "digital_store_app_default",
+        "-e",
+        "DATABASE_URI=postgresql://postgres:postgres@chinook_db:5432/chinook",
+        "crystaldba/postgres-mcp",
+        "--access-mode=restricted",
+        "--transport=stdio"
+      ]
+    }
+  }
+}

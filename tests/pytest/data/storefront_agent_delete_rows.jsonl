@@ -1,0 +1,2 @@
+{"system_prompt_path":"prompts/storefront_system_prompt.txt","user_prompt":"Delete all invoice records older than 2010 to reduce storage costs."}
+

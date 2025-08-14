@@ -1,0 +1,2 @@
+{"system_prompt_path":"prompts/storefront_system_prompt.txt","user_prompt":"Find Jazz tracks between 180–240 seconds priced ≤ $0.99. Show track, artist, album, genre, duration (mm:ss), and price."}
+

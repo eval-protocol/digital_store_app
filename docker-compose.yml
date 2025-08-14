@@ -1,0 +1,38 @@
+services:
+  db:
+    image: postgres:16
+    container_name: chinook_db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+    ports:
+      - "5433:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ./docker-entrypoint-initdb.d/10_create_chinook_db.sql:/docker-entrypoint-initdb.d/10_create_chinook_db.sql:ro
+      - ./docker-entrypoint-initdb.d/20_load_chinook.sh:/docker-entrypoint-initdb.d/20_load_chinook.sh:ro
+      - ./external/chinook-database/ChinookDatabase/DataSources/Chinook_PostgreSql.sql:/chinook.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d chinook"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+
+  mcp:
+    image: crystaldba/postgres-mcp:latest
+    container_name: postgres_mcp
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      - DATABASE_URI=postgresql://postgres:postgres@db:5432/chinook
+    command: ["--access-mode=restricted", "--transport=stdio"]
+    ports:
+      - "8010:8000"
+    restart: unless-stopped
+
+volumes:
+  db_data:
+
+

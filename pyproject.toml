@@ -1,0 +1,19 @@
+[project]
+name = "digital-store-app"
+version = "0.1.0"
+requires-python = ">=3.10"
+dependencies = [
+    "psycopg[binary]>=3.2",
+    "pytest>=8.2",
+    "eval-protocol>=0.1.0",
+    "fastmcp>=2.10.5",
+]
+
+[tool.pytest.ini_options]
+addopts = "-q"
+testpaths = ["tests"]
+
+[tool.uv]
+dev-dependencies = []
+
+

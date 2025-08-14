@@ -1,4 +1,5 @@
 import json
+import os
 import asyncio
 from typing import Any, Dict, List, Union
 
@@ -58,22 +59,26 @@ async def mcp_execute_sql_sse(url: str, sql: str) -> Dict[str, Any]:
             return result
 
 
-def _noop_rollout_processor(rows, config, *_, **__):
-    # No model call; pass-through of dataset
-    return rows
+async def _noop_rollout_processor(rows, config, *_, **__):
+    # No model call; pass-through of dataset as an async generator
+    for r in rows:
+        yield r
 
+
+if os.getenv("RUN_MCP_EVAL") != "1":
+    import pytest as _pytest
+    _pytest.skip("RUN_MCP_EVAL!=1; skipping MCP integration eval", allow_module_level=True)
 
 @evaluation_test(
     input_dataset=["tests/pytest/data/storefront_browse_sample.jsonl"],
     dataset_adapter=storefront_dataset_to_evaluation_row,
-    model=["local/simulated"],
-    rollout_input_params=[{"temperature": 0.0, "max_tokens": 256}],
+    completion_params=[{"model": "local/simulated", "temperature": 0.0, "max_tokens": 256}],
     rollout_processor=_noop_rollout_processor,
     passed_threshold=1.0,
     num_runs=1,
     mode="pointwise",
 )
-def test_storefront_browse_eval(row: EvaluationRow) -> EvaluationRow:
+async def test_storefront_browse_eval(row: EvaluationRow) -> EvaluationRow:
     """Simulated-user eval: browse-only Jazz ≤ $0.99, limit 10, compact output contract.
 
     We simulate the assistant behavior deterministically (no LLM call):
@@ -96,7 +101,7 @@ def test_storefront_browse_eval(row: EvaluationRow) -> EvaluationRow:
         LIMIT 10
         """
     )
-    call_result = asyncio.run(mcp_execute_sql_sse("http://localhost:8010/sse", sql))
+    call_result = await mcp_execute_sql_sse("http://localhost:8010/sse", sql)
 
     # Postgres MCP returns CallToolResult with content list; execute_sql returns text content with a JSON-ish string.
     rows = []

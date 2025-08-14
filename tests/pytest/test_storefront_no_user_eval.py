@@ -52,8 +52,7 @@ def single_prompt_adapter(inputs: List[Union[str, Dict[str, Any], List[Any]]]) -
 @evaluation_test(
 	input_dataset=["tests/pytest/data/storefront_basic_prompt.jsonl"],
 	dataset_adapter=single_prompt_adapter,
-    model=["fireworks_ai/accounts/fireworks/models/gpt-oss-120b#pyroworks/wzflb9s1"],
-	rollout_input_params=[{"temperature": 0.0}],
+	completion_params=[{"model": "fireworks_ai/accounts/fireworks/models/gpt-oss-120b#pyroworks/wzflb9s1", "temperature": 0.0}],
 	rollout_processor=default_single_turn_rollout_processor,
 	mcp_config_path="mcp.json",
 	passed_threshold=None,

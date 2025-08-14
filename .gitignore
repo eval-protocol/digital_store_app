@@ -1,0 +1,46 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+
+# Distribution / packaging
+.build/
+build/
+dist/
+*.egg-info/
+.eggs/
+.python-version
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+.coverage
+*.coverage
+*.cover
+htmlcov/
+.pytest_cache/
+
+# IDE/editor
+.vscode/
+.idea/
+
+# Project artifacts
+.eval_protocol/
+uv.lock
+
+digital_store_app.egg-info/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Local data
+*.sqlite
+*.db

@@ -5,6 +5,7 @@ requires-python = ">=3.10"
 dependencies = [
     "psycopg[binary]>=3.2",
     "pytest>=8.2",
+    "pytest-asyncio>=0.23",
     "eval-protocol>=0.1.0",
     "fastmcp>=2.10.5",
 ]
@@ -15,5 +16,14 @@ testpaths = ["tests"]
 
 [tool.uv]
 dev-dependencies = []
+
+
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+# Explicitly disable automatic package discovery; this project ships no importable package.
+packages = []
 
 
